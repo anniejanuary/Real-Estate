@@ -1,0 +1,15 @@
+# for security reasons
+.git
+.env
+.vscode
+# virutal env
+venv
+env
+
+# other
+**/__pycache__
+.gitignore
+.dockerignore
+.env_example
+README.md
+Dockerfile

@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  web:
+    env_file:
+      # see .env_example
+      - .env
+    build: .
+    command: python real_estate\manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      # from .env
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+
+volumes:
+  postgres_data:
