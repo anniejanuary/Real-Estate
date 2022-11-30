@@ -9,12 +9,10 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR $WORKDIR
 
 COPY ./requirements.txt $WORKDIR
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
-# Add user without root privileges and set access to workdir - for security reasons
-RUN adduser --system --group $USER
+RUN pip install --upgrade pip && \ 
+    pip install -r requirements.txt && \
+    adduser --system --group $USER && \
+    chown -R $USER:$USER $WORKDIR
 
 COPY ./app $WORKDIR
-RUN chown -R $USER:$USER $WORKDIR
 USER $USER
