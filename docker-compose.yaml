@@ -6,7 +6,7 @@ services:
       # see .env_example
       - .env
     build: .
-    command: python real_estate\manage.py runserver 0.0.0.0:8000
+    command: python real_estate/manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     depends_on:
