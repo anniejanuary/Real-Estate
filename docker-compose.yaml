@@ -6,7 +6,10 @@ services:
       # see .env_example
       - .env
     build: .
-    command: python real_estate/manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python real_estate/manage.py wait_for_db &&
+      python real_estate/manage.py migrate &&
+      python real_estate/manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
     depends_on:
