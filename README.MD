@@ -28,12 +28,22 @@ Testing
 
 Tests made in Unittest.
 
-Test should be executed thru manage module - as django needs setup method to be fired in 
-order to prepare all django modules/functions/elements to be available in test methods.
-Therefore, while in terminal change path to folder where manage.py resides and then:
+Firsty db should be started - or working containers (including db) should be up.
 
 ```
-$ python manage.py test
+$ docker-compose up -d db
+```
+Tests should be ran thru docker-compose in order to get all needed django services.
+Therefore:
+
+- web: a service name from docker-compose
+- real_estate/manage.py: path for manage.py file
+- core.tests: path for test catalogue in docker container
+- --rm switch: test container will be removed after test execution
+
+```
+$ docker-compose run --rm web sh -c "python real_estate/manage.py test core.tests"
 ```
 
 Result will be produced in same terminal window after test execution.
+For testing reference see: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Testing
