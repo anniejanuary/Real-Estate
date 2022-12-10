@@ -2,12 +2,12 @@ Install codebase:
 
 git clone repo_link
 
-Prerequistes:
+# Prerequistes:
 
 1. Docker installed
 2. Docker-compose installed
 
-To run the app (while in project root):
+### To run the app (while in project root):
 
 1. Create .env (see .env_example) in project root
 2. Start docker
@@ -24,7 +24,18 @@ $ docker-compose down -v
 $ docker-compose up -d --build
 ```
 
-Testing
+### To add superuser (admin):
+
+```
+$ docker-compose run --rm web sh -c "python real_estate/manage.py createsuperuser"
+```
+
+Create user on interactive prompt and then you can login in into service with your credentials at:
+
+localhost:8000/admin
+
+
+## Testing
 
 Tests made in Unittest.
 
