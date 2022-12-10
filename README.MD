@@ -26,11 +26,18 @@ $ docker-compose up -d --build
 
 ### To add superuser (admin):
 
+Firstly start the services (in order to apply migrations etc.)
+
+```
+$ docker-compose up
+```
+Then issue the command to create admin user:
+
 ```
 $ docker-compose run --rm web sh -c "python real_estate/manage.py createsuperuser"
 ```
 
-Create user on interactive prompt and then you can login in into service with your credentials at:
+Finish user creation on interactive prompt and then you can login in into service (users can be added, viewed, modified in admin dashboard) - with your credentials at:
 
 localhost:8000/admin
 
