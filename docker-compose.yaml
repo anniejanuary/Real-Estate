@@ -1,11 +1,23 @@
-version: "3.3"
+version: "3.5"
+
+volumes:
+  postgres_data:
+
+networks:
+  real_estate_docker_network:
+    name: real_estate_docker_network
+    driver: bridge
 
 services:
-  web:
+
+  backend:
+    container_name: django_backend_real_estate
     env_file:
       # see .env_example
       - .env
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile_django_backend
     command: >
       sh -c "python manage.py wait_for_db &&
       python manage.py migrate &&
@@ -13,17 +25,22 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-  db:
-    image: postgres:13-alpine
+      - database
+    networks:
+      - real_estate_docker_network
+
+  database:
+    container_name: postgres_db_real_estate
+    build:
+      context: .
+      dockerfile: Dockerfile_postgres_db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      # from .env
+    # from .env
     environment:
       - POSTGRES_HOST=${DATABASE_HOST}
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
-
-volumes:
-  postgres_data:
+    networks:
+      - real_estate_docker_network
