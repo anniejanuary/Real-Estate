@@ -51,7 +51,7 @@ $ docker-compose up
 Then issue the command to create admin user:
 
 ```
-$ docker-compose run --rm web sh -c "python manage.py createsuperuser"
+$ docker-compose run --rm backend sh -c "python manage.py createsuperuser"
 ```
 
 Finish user creation on interactive prompt and then you can login in onto service (users can be added, viewed, modified in admin dashboard - by Admin only) - with your credentials at:
