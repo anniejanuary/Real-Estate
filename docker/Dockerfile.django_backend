@@ -14,5 +14,5 @@ RUN pip install --upgrade pip && \
     adduser --system --group $USER && \
     chown -R $USER:$USER $WORKDIR
 
-COPY ./app $WORKDIR
+COPY ./app/backend $WORKDIR
 USER $USER
