@@ -34,7 +34,7 @@ $ docker-compose up
 Then issue the command to create admin user:
 
 ```
-$ docker-compose run --rm web sh -c "python real_estate/manage.py createsuperuser"
+$ docker-compose run --rm web sh -c "python manage.py createsuperuser"
 ```
 
 Finish user creation on interactive prompt and then you can login in into service (users can be added, viewed, modified in admin dashboard) - with your credentials at:
@@ -55,12 +55,12 @@ Tests should be ran thru docker-compose in order to get all needed django servic
 Therefore:
 
 - web: a service name from docker-compose
-- real_estate/manage.py: path for manage.py file
+- manage.py: django central file that tests are ran thru
 - core.tests: path for test catalogue in docker container
 - --rm switch: test container will be removed after test execution
 
 ```
-$ docker-compose run --rm web sh -c "python real_estate/manage.py test core.tests"
+$ docker-compose run --rm web sh -c "python manage.py test core.tests"
 ```
 
 Result will be produced in same terminal window after test execution.
