@@ -8,6 +8,7 @@ The app will be build with:
 
 - dockerized microservices
 - Django/DRF backend (API)
+- Swagger auto documentation for API's
 - Postgres as database
 - Vue as frontend service
 - Beautiful Soup for web scrapping
@@ -56,8 +57,13 @@ $ docker-compose run --rm backend sh -c "python manage.py createsuperuser"
 
 Finish user creation on interactive prompt and then you can login in onto service (users can be added, viewed, modified in admin dashboard - by Admin only) - with your credentials at:
 
-localhost:8000/admin
+<strong>localhost:8000/admin</strong>
 
+
+## Interaction with the app
+
+At this point only <strong>/admin</strong> endpoint available (see "To add superuser" paragraph).<br>
+Swagger documentation available at <strong>/api/docs</strong> and will be filled up automatically following the work on. 
 
 ## Testing
 
