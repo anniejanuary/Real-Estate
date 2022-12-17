@@ -1,16 +1,33 @@
-Install codebase:
+# General info
 
-git clone repo_link
+<strong>THE APP in first stage of development. Backend/ frontend services under construction.</strong>
 
-# Prerequistes:
+Django/ Vue web app for gathering real estate announces form various web sites in order to present result to the user accordingly to his criteria in the app UI.
+
+The app will be build with:
+
+- dockerized microservices
+- Django/DRF backend (API)
+- Postgres as database
+- Vue as frontend service
+- Beautiful Soup for web scrapping
+
+## Prerequistes:
 
 1. Docker installed
-2. Docker-compose installed
+2. Docker-compose installed (>= 3.5)
+
+
+### Install codebase:
+
+```
+$ git clone https://github.com/anniejanuary/Real-Estate.git
+```
 
 ### To run the app (while in project root):
 
 1. Create .env (see .env_example) in project root
-2. Start docker
+2. Start docker-compose to build services
 
 ```
 $ docker-compose up -d --build
@@ -34,10 +51,10 @@ $ docker-compose up
 Then issue the command to create admin user:
 
 ```
-$ docker-compose run --rm web sh -c "python real_estate/manage.py createsuperuser"
+$ docker-compose run --rm backend sh -c "python manage.py createsuperuser"
 ```
 
-Finish user creation on interactive prompt and then you can login in into service (users can be added, viewed, modified in admin dashboard) - with your credentials at:
+Finish user creation on interactive prompt and then you can login in onto service (users can be added, viewed, modified in admin dashboard - by Admin only) - with your credentials at:
 
 localhost:8000/admin
 
@@ -46,21 +63,22 @@ localhost:8000/admin
 
 Tests made in Unittest.
 
-Firsty db should be started - or working containers (including db) should be up.
+Firsty database should be started if not already operational.
 
 ```
-$ docker-compose up -d db
+$ docker-compose up -d database
 ```
-Tests should be ran thru docker-compose in order to get all needed django services.
+Tests should be ran thru docker-compose in order to get all needed django services started by manage.py.
+
 Therefore:
 
-- web: a service name from docker-compose
-- real_estate/manage.py: path for manage.py file
+- backend: a service name from docker-compose
+- manage.py: django central file that tests are ran thru
 - core.tests: path for test catalogue in docker container
 - --rm switch: test container will be removed after test execution
 
 ```
-$ docker-compose run --rm web sh -c "python real_estate/manage.py test core.tests"
+$ docker-compose run --rm backend sh -c "python manage.py test core.tests"
 ```
 
 Result will be produced in same terminal window after test execution.
