@@ -38,6 +38,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     # from .env
     environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_HOST=${DATABASE_HOST}
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
