@@ -1,13 +1,42 @@
+from typing import OrderedDict
+
+from core.models import User
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from core.models import User
-from typing import OrderedDict
+from rest_framework_simplejwt.serializers import (
+    TokenObtainPairSerializer,
+)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Used to return encoded token with extra fields.
+    """
+
+    @classmethod
+    def get_token(cls, user: User) -> str:
+        """
+        Add custom fields and return encoded token.
+
+        Args:
+            user (User): for which token will be returned
+
+        Returns:
+            str: encoded token with custom fields
+        """
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+        # Custom field/s to be attached to the token
+        token["name"] = user.name
+   
+        return token
 
 
 class UserSerializer(serializers.ModelSerializer):
     """
     Used to create, update and register users in the service.
     """
+
     class Meta:
 
         model = get_user_model()
@@ -26,9 +55,7 @@ class UserSerializer(serializers.ModelSerializer):
             Returns:
                 User: created user
             """
-            user = get_user_model.user_manager.create_user(
-                **validated_data
-            )
+            user = get_user_model.objects.create_user(**validated_data)
 
             return user
 
@@ -40,7 +67,7 @@ class UserSerializer(serializers.ModelSerializer):
 
             Args:
                 instance (User): User object instance
-                validated_data (OrderedDict[str, str]): validated user email, password 
+                validated_data (OrderedDict[str, str]): validated user email, password
                                                         and name (from Meta)
 
             Returns:
