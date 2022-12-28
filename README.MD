@@ -35,7 +35,12 @@ $ docker-compose up -d --build
 ```
 
 3. Go to: localhost:8000/api/docs
-4. Endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token (after superuser creation - see paragraph "To add superuser")
+4. Interaction for now:
+
+a) create supersuer (see paragraph "To add superuser")
+b) Endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token
+c) test protected endpoints (/api/users/me)
+
 5. If any rebuild/ code change/ or db problem
 
 ```
@@ -85,7 +90,7 @@ Therefore:
 - --rm switch: test container will be removed after test execution
 
 ```
-$ docker-compose run --rm backend sh -c "python manage.py test core.tests"
+$ docker-compose run --rm backend sh -c "python manage.py test"
 ```
 
 Result will be produced in same terminal window after test execution.
