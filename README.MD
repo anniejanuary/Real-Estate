@@ -37,9 +37,9 @@ $ docker-compose up -d --build
 3. Go to: localhost:8000/api/docs
 4. Interaction for now:
 
-a) create supersuer (see paragraph "To add superuser")
-b) Endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token
-c) test protected endpoints (/api/users/me)
+- create supersuer (see paragraph "To add superuser")
+- endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token
+- test protected endpoints (/api/users/me)
 
 5. If any rebuild/ code change/ or db problem
 
