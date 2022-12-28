@@ -26,7 +26,8 @@ class CreateUserView(generics.CreateAPIView):
     """
 
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    # TODO decide whether authentication needed on that endpoint
+    #permission_classes = [IsAuthenticated]
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
