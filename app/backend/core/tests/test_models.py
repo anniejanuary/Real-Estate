@@ -9,7 +9,7 @@ class ModelTests(TestCase):
         """Test creating user with email successful."""
         email = "test@test.com"
         password = "testPass"
-        user = get_user_model().user_manager.create_user(
+        user = get_user_model().objects.create_user(
             email=email, password=password
         )
 
@@ -19,7 +19,7 @@ class ModelTests(TestCase):
     def test_create_superuser(self):
         email = "admin@test.com"
         password = "testPass"
-        user = get_user_model().user_manager.create_superuser(
+        user = get_user_model().objects.create_superuser(
             email=email, password=password
         )
 
