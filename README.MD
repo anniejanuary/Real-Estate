@@ -34,8 +34,14 @@ $ git clone https://github.com/anniejanuary/Real-Estate.git
 $ docker-compose up -d --build
 ```
 
-3. Go to: localhost:8000 for Django status page
-4. If any rebuild/ code change/ or db problem
+3. Go to: localhost:8000/api/docs
+4. Interaction for now:
+
+- create supersuer (see paragraph "To add superuser")
+- endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token
+- test protected endpoints (/api/users/me)
+
+5. If any rebuild/ code change/ or db problem
 
 ```
 $ docker-compose down -v
@@ -84,7 +90,7 @@ Therefore:
 - --rm switch: test container will be removed after test execution
 
 ```
-$ docker-compose run --rm backend sh -c "python manage.py test core.tests"
+$ docker-compose run --rm backend sh -c "python manage.py test"
 ```
 
 Result will be produced in same terminal window after test execution.
