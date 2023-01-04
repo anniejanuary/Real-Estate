@@ -29,6 +29,16 @@ services:
     networks:
       - real_estate_docker_network
 
+  frontend:
+    container_name: vue_frontend_real_estate
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.vue_frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - real_estate_docker_network
+
   database:
     container_name: postgres_db_real_estate
     build:

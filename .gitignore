@@ -5,6 +5,11 @@
 db.sqlite3
 media
 
+# node/ Vue
+**/node_modules
+npm-debug.log*
+**/dist
+
 # Other #
 venv
 env
