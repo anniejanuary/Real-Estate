@@ -9,9 +9,10 @@ The app will be build with:
 - dockerized microservices
 - Django/DRF backend (API)
 - Swagger auto documentation for API's
-- Postgres as database
+- Postgres as database for user and user saved links management
 - Vue as frontend service
 - Beautiful Soup for web scrapping
+- Redis as caching for beautifulsoup links saving
 
 ## Prerequistes:
 
@@ -34,12 +35,24 @@ $ git clone https://github.com/anniejanuary/Real-Estate.git
 $ docker-compose up -d --build
 ```
 
-3. Go to: localhost:8000/api/docs
+3. At this point following services availbe:
+
+- Django API documentation (Swagger) available at localhost:8000/api/docs
+- Django admin panel available (log in after superuser creation) at localhost:8000/admin
+- Vue frontend service available at localhost:8080
+- PostgresDB operational for user save
+
 4. Interaction for now:
 
-- create supersuer (see paragraph "To add superuser")
-- endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token
-- test protected endpoints (/api/users/me)
+- see API documentation for available endpoints at localhost:8000/api/docs
+- create user thru API endpoint (or by curl at your preference)
+- create superuser by terminal (see To add superuser (admin) section) to manage servoce and users
+- some endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token (with created user/ supersuer credentials)
+- at this stage app user can:
+    - create new user
+    - login in (obtain JWT token for protected endpoints)
+    - get info about logged in user
+    - update logged in user
 
 5. If any rebuild/ code change/ or db problem
 
@@ -84,9 +97,9 @@ Tests should be ran thru docker-compose in order to get all needed django servic
 
 Therefore:
 
-- backend: a service name from docker-compose
+- backend: a service name from docker-compose representing API service
 - manage.py: django central file that tests are ran thru
-- core.tests: path for test catalogue in docker container
+- test: manage.py run all discovered tests within docker-compose workdir
 - --rm switch: test container will be removed after test execution
 
 ```
