@@ -22,7 +22,6 @@ class MyObtainTokenPairView(TokenObtainPairView):
 class CreateUserView(generics.CreateAPIView):
     """
     API view created to create new user.
-    Protected by JWT.
     """
 
     serializer_class = UserSerializer
