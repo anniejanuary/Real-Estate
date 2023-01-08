@@ -61,7 +61,7 @@
 
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 .gradient-custom-2 {
   /* fallback for old browsers */
