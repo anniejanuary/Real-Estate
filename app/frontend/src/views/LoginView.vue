@@ -10,6 +10,7 @@
                 <div class="card-body p-md-5 mx-md-4">
 
                   <div class="text-center">
+<!--TODO: provide custom webp logo file later on--> 
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
                       style="width: 185px;" alt="logo">
                     <h4 class="mt-1 mb-5 pb-1">The Real Estate aggregation service</h4>
