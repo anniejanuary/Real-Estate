@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR $WORKDIR
 
-COPY ./requirements.txt $WORKDIR
+COPY build/requirements.txt $WORKDIR
 RUN pip install --upgrade pip && \ 
     pip install -r requirements.txt && \
     adduser --system --group $USER && \
