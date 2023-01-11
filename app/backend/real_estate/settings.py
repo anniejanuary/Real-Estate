@@ -180,5 +180,8 @@ SIMPLE_JWT = {
 
 # CORS policy settings
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080",) # Vue serving/ listening port
+# Vue serving/ listening port
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8080",
+    "http://localhost:8080"
+    ] 
