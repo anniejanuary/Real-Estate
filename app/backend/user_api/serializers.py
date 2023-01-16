@@ -3,33 +3,8 @@ from typing import OrderedDict
 from core.models import User
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import (
-    TokenObtainPairSerializer,
-)
-
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """
-    Used to return encoded token with extra fields.
-    """
-
-    @classmethod
-    def get_token(cls, user: User) -> str:
-        """
-        Add custom fields and return encoded token.
-
-        Args:
-            user (User): for which token will be returned
-
-        Returns:
-            str: encoded token with custom fields
-        """
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-        # Custom field/s to be attached to the token
-        token["name"] = user.name
-   
-        return token
+from rest_framework_simplejwt.exceptions import InvalidToken
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenBlacklistSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -40,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ["email", "password", "name"]
+        # Not returned by the service
         extra_kwargs = {
             "password": {"write_only": True, "min_length": 5}
         }
@@ -82,3 +58,31 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class CookieTokenRefreshSerializer(TokenRefreshSerializer):
+    """Overwiritten validate behaviour for cookies."""
+    refresh = None
+
+    def validate(self, attrs):
+        attrs["refresh"] = self.context["request"].COOKIES.get(
+            "refresh"
+        )
+        if attrs["refresh"]:
+            return super().validate(attrs)
+        else:
+            raise InvalidToken("No valid token found in cookie")
+        
+class CookieTokenBlacklistSerializer(TokenBlacklistSerializer):
+    """Overwritten validate function behaviour for jwt in cookies."""
+    refresh = None
+
+    def validate(self, attrs):
+        attrs["refresh"] = self.context["request"].COOKIES.get(
+            "refresh"
+        )
+        if attrs["refresh"]:
+            return super().validate(attrs)
+        else:
+            raise InvalidToken("No valid token found in cookie")
+

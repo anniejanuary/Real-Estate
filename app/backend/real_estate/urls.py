@@ -4,20 +4,28 @@ from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
 )
-from rest_framework_simplejwt.views import TokenRefreshView
-from user_api.views import MyObtainTokenPairView
+from user_api.views import (
+    MyTokenBlacklistView,
+    MyTokenObtainPairView,
+    MyTokenRefreshView,
+)
 
 urlpatterns = [
-    # Token endpoints
+    # Auth endpoints - JWTs in httponly cookies
     path(
-        "api/token/",
-        MyObtainTokenPairView.as_view(),
+        "api/auth/login/",
+        MyTokenObtainPairView.as_view(),
         name="token_obtain_pair",
     ),
     path(
-        "api/token/refresh/",
-        TokenRefreshView.as_view(),
+        "api/auth/refresh/",
+        MyTokenRefreshView.as_view(),
         name="token_refresh",
+    ),
+    path(
+        "api/auth/logout/",
+        MyTokenBlacklistView.as_view(),
+        name="token_blacklist",
     ),
     # Admin panel endpoint
     path("admin/", admin.site.urls),
