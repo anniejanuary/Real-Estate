@@ -13,43 +13,33 @@
                     <!--TODO: provide custom webp logo file later on-->
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
                       style="width: 185px;" alt="logo">
-                    <h4 class="mt-1 mb-5 pb-1">The Real Estate log in service</h4>
+                    <h4 class="mt-1 mb-5 pb-1">The Real Estate User Dashboard</h4>
                   </div>
 
-                  <form>
-
-                    <div class="form-outline mb-4">
-                      <input type="email" v-model="email" id="form2Example11" class="form-control"
-                        placeholder="Email" />
-                      <label class="form-label" for="form2Example11">Email</label>
+                  <div class="text-center pt-1 mb-5 pb-1">
+                    <div>
+                      <p>Your username:</p>
+                      <p>{{ user_data.name }}</p>
+                    </div>
+                    <div>
+                      <p>Your email:</p>
+                      <p>{{ user_data.email }}</p>
                     </div>
 
-                    <div class="form-outline mb-4">
-                      <input type="password" v-model="password" id="form2Example22" class="form-control"
-                        placeholder="Password" />
-                      <label class="form-label" for="form2Example22">Password</label>
-                    </div>
-
-                    <div class="text-center pt-1 mb-5 pb-1">
+                    <div class="pt-1 mb-5 pb-1">
                       <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button"
-                        @click="submit()">Login</button>
-                      <br>
-                      <a class="text-muted">Forgot password?</a>
+                        @click="getUserData()">Get Data</button>
+                      <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button"
+                        @click="logOut()">Log Out</button>
                     </div>
 
-                    <div class="d-flex align-items-center justify-content-center pb-4">
-                      <p class="mb-0 me-2">Don't have an account?</p>
-                      <button type="button" class="btn btn-outline-danger" @click="goToUserRegister()">Create new</button>
-                    </div>
-
-                  </form>
+                  </div>
 
                 </div>
               </div>
               <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                 <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                  <h4 class="mb-4">Would like to get your previous searches ?</h4>
-                  <p class="small mb-0">You can log in to the service - those will wait for You in the dashboard!</p>
+                  <h4 class="mb-4">Here You can find all your profile related data and settings.</h4>
                 </div>
               </div>
             </div>
@@ -65,28 +55,41 @@
 export default {
   data () {
     return {
-      email: '',
-      password: ''
+      user_data: {}
     }
   },
   methods: {
-    submit () {
+    getUserData () {
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        credentials: 'include'
+      }
+
+      fetch('http://127.0.0.1:8000/api/user/me/', requestOptions)
+        .then(response => response.json())
+        // eslint-disable-next-line no-return-assign
+        .then(data => {
+          this.user_data = data
+        })
+    },
+    logOut () {
       const requestOptions = {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
         },
-        credentials: 'include',
-        body: JSON.stringify({ email: this.email, password: this.password })
+        credentials: 'include'
       }
 
-      fetch('http://127.0.0.1:8000/api/auth/login/', requestOptions)
-        .then(result => result.json())
+      fetch('http://127.0.0.1:8000/api/auth/logout/', requestOptions)
 
-      window.location.href = '/#/profile'
+      window.location.href = '/#/home'
     },
-    goToUserRegister () {
-      window.location.href = '/#/register'
+    mounted () {
+      this.getUserData()
     }
   }
 }

@@ -2,17 +2,16 @@
 
 <strong>THE APP in first stage of development. Backend/ frontend services under construction.</strong>
 
-Django/ Vue web app for gathering real estate announces form various web sites in order to present result to the user accordingly to his criteria in the app UI.
+Django/ Vue web app for gathering real estate announces from various web sites in order to present result to the user accordingly to his criteria in the app UI.
 
 The app will be build with:
 
-- dockerized microservices
-- Django/DRF backend (API)
-- Swagger auto documentation for API's
+- docker(microservices)
+- Django/DRF as backend (API)
+- Swagger docs for API's
 - Postgres as database for user and user saved links management
 - Vue as frontend service
 - Beautiful Soup for web scrapping
-- Redis as caching for beautifulsoup links saving
 
 ## Prerequistes:
 
@@ -20,13 +19,13 @@ The app will be build with:
 2. Docker-compose installed (>= 3.5)
 
 
-### Install codebase:
+## Install codebase:
 
 ```
 $ git clone https://github.com/anniejanuary/Real-Estate.git
 ```
 
-### To run the app (while in project root):
+## To run the app (while in project root):
 
 1. Create .env (see .env_example) in project root
 2. Start docker-compose to build services
@@ -35,31 +34,36 @@ $ git clone https://github.com/anniejanuary/Real-Estate.git
 $ docker-compose up -d --build
 ```
 
-3. At this point following services availbe:
+## Interaction with the app:
 
-- Django API documentation (Swagger) available at localhost:8000/api/docs
+At this point following services availabe:
+
+- Django API at localhost:8000/api
 - Django admin panel available (log in after superuser creation) at localhost:8000/admin
 - Vue frontend service available at localhost:8080
 - PostgresDB operational for user save
+<br>
+Currently the app user can interact with the service thru either Vue front end service or Django based API.
 
-4. Interaction for now:
+For Vue frontend visit: localhost:8080
+For API visit: localhost:8000/api/docs/
 
-- see API documentation for available endpoints at localhost:8000/api/docs
-- create user thru API endpoint (or by curl at your preference)
-- create superuser by terminal (see To add superuser (admin) section) to manage servoce and users
-- some endpoints are protected by JWT - need to obtain valid token at localhost:8000/api/token (with created user/ supersuer credentials)
-- at this stage app user can:
-    - create new user
-    - login in (obtain JWT token for protected endpoints)
-    - get info about logged in user
-    - update logged in user
+<br>
 
-5. If any rebuild/ code change/ or db problem
+At this stage app user can:
+
+- create new user
+- log in
+- get info about logged in user
+- update logged in user (API only for now)
+
+5. If any rebuild/ code change/ or db problems
 
 ```
 $ docker-compose down -v
 $ docker-compose up -d --build
 ```
+<br>
 
 ### To add superuser (admin):
 
@@ -78,11 +82,7 @@ Finish user creation on interactive prompt and then you can login in onto servic
 
 <strong>localhost:8000/admin</strong>
 
-
-## Interaction with the app
-
-At this point only <strong>/admin</strong> endpoint available (see "To add superuser" paragraph).<br>
-Swagger documentation available at <strong>/api/docs</strong> and will be filled up automatically following the work on. 
+<br>
 
 ## Testing
 

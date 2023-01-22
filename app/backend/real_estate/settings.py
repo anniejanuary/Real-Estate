@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders", # CORS policy for Vue
+    "corsheaders",  # CORS policy for Vue
+    "rest_framework_simplejwt.token_blacklist",  # Logout from service
     "core",
     "user_api",
     "rest_framework",
@@ -58,7 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware", # CORS policy for Vue
+    "corsheaders.middleware.CorsMiddleware",  # CORS policy for Vue
 ]
 
 ROOT_URLCONF = "real_estate.urls"
@@ -147,7 +148,7 @@ AUTH_USER_MODEL = "core.User"
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "real_estate.custom_auth.CustomAuthentication",  # Custom JWTAuthentication added
     ),
 }
 
@@ -155,8 +156,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": False,
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
@@ -176,9 +177,15 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+    "AUTH_COOKIE": "access",  # Custom added constant - cookie name sets here
+    "REFRESH_COOKIE": "refresh",  # Custom added constant - cookie name sets here
+    "AUTH_COOKIE_HTTP_ONLY": True,  # Custom added constant
+    "AUTH_COOKIE_SAMESITE": "Lax",  # Custom added constant
 }
 
 # CORS policy settings
-
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080",) # Vue serving/ listening port
+CORS_ALLOW_CREDENTIALS = True # For cookies to be sent either way
+CORS_ALLOWED_ORIGINS = [ # To pass the origin thru CORS filter
+    "http://127.0.0.1:8080",
+    "http://localhost:8080",
+]
